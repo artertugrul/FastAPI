@@ -89,3 +89,9 @@ def delete_post(id: int, db: Session = Depends(get_db), current_user: int = Depe
     db.commit()
 
     return
+
+
+
+@router("test")
+def test():
+    return {"data": "test code"}
