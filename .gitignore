@@ -1,5 +1,9 @@
 # Virtual environment files
 fastapi_venv/
+recap.py
+
+# Other files
+requirements.txt
 
 
 # Byte-compiled / optimized / DLL files

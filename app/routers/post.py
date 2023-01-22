@@ -90,6 +90,3 @@ def delete_post(id: int, db: Session = Depends(get_db), current_user: int = Depe
 
     return
 
-
-
-"code in the master branch"
