@@ -92,12 +92,4 @@ def delete_post(id: int, db: Session = Depends(get_db), current_user: int = Depe
 
 
 
-@router("test")
-def test():
-    return {"data": "test code for the art experimental brach"}
-
-
-
-@router("test2")
-def test_2():
-    return {"data": "test code for the master branch"}
+"code in the master branch"
