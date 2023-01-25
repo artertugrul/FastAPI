@@ -7,6 +7,8 @@ from sqlalchemy.orm import Session
 from .. import models, oauth2, schemas
 from ..database import get_db
 
+from typing import Optional
+
 router = APIRouter(
     prefix="/posts",
     tags=["Posts"]
@@ -14,8 +16,8 @@ router = APIRouter(
 
 
 @router.get("/", response_model=List[schemas.PostsBack])
-def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
-    posts = db.query(models.Post).all()
+def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user), limit: int=  None, search: Optional[str]=""):
+    posts = db.query(models.Post).filter(models.Post.title.contains(search)).all()
     return posts
 
 
