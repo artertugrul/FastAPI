@@ -1,13 +1,11 @@
 
-from typing import List
+from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from .. import models, oauth2, schemas
 from ..database import get_db
-
-from typing import Optional
 
 router = APIRouter(
     prefix="/posts",
