@@ -3,6 +3,7 @@ from typing import List
 from fastapi import FastAPI
 
 from . import models
+from .config import settings
 from .database import engine
 from .routers import auth, post, user
 
