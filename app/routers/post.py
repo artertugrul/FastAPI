@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from sqlalchemy  import  func
 
 from .. import models, oauth2, schemas
 from ..database import get_db
@@ -13,10 +14,15 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_model=List[schemas.PostsBack])
-def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user), limit: int=  None, search: Optional[str]=""):
-    posts = db.query(models.Post).filter(models.Post.title.contains(search)).all()
-    return posts
+@router.get("/", response_model=List[schemas.Post_votes])
+def get_posts(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user), limit: int=  None, search: Optional[str]="", skip:int=0):
+    # posts = db.query(models.Post).filter(models.Post.title.contains(search)).all()
+    results  =  db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(
+            models.Vote, models.Vote.post_id  == models.Post.id, isouter=True).group_by(models.Post.id).filter(
+            models.Post.title.contains(search)).limit(limit).offset(skip).all()
+
+ 
+    return results
 
 
 
@@ -31,7 +37,7 @@ def get_my_posts(db: Session = Depends(get_db), current_user: int = Depends(oaut
     return  my_post_queery.all()
 
 
-@router.get("/{id}", response_model=schemas.PostsBack)
+@router.get("/{id}", response_model=schemas.Post_votes)
 def get_post(id: int, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     post_querry = db.query(models.Post).filter(models.Post.id == id)
 
@@ -39,9 +45,9 @@ def get_post(id: int, db: Session = Depends(get_db), current_user: int = Depends
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f"post with {id} was not found!")
 
-    post = post_querry.first()
-
-    return post
+    result  = db.query(models.Post, func.count(models.Vote.post_id).label("votes")).join(
+            models.Vote, models.Vote.post_id == models.Post.id).group_by(models.Post.id).filter(models.Post.id == id).first()
+    return result
 
 
 @router.post("/", response_model=schemas.PostsBack, status_code=status.HTTP_201_CREATED)

@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, conint
 
 
 class User(BaseModel):
@@ -47,6 +47,19 @@ class PostsBack(Post):
 
     class Config:
         orm_mode = True
+
+class  Post_votes(BaseModel):
+    Post: PostsBack
+    votes: int
+
+    class Config:
+        orm_mode = True
+
+    
+
+class Vote(BaseModel):
+    post_id:  int
+    dir: conint(le=1)
 
 
 
