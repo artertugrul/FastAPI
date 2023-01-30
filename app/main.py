@@ -36,5 +36,5 @@ app.include_router(vote.router)
 
 @app.get("/")
 def root():
-    return {"data": "Napiyon lan mal bebe  hahahahahah!!!"}
+    return {"data": "Gotune koyim kamil senin!"}
 
