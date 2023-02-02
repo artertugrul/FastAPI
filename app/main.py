@@ -14,10 +14,7 @@ from .routers import auth, post, user, vote
 
 app = FastAPI()
 
-
 origins = ["*"]
-
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -33,8 +30,6 @@ app.include_router(auth.router)
 app.include_router(vote.router)
 
 
-
 @app.get("/")
 def root():
-    return {"data": "J is a massive C*nt!"}
-
+    return {"data": "J is a Massive C*nt!"}
