@@ -36,5 +36,5 @@ app.include_router(vote.router)
 
 @app.get("/")
 def root():
-    return {"data": "J is massive C*nt!"}
+    return {"data": "J is a massive C*nt!"}
 
