@@ -14,7 +14,10 @@ from .routers import auth, post, user, vote
 
 app = FastAPI()
 
+
 origins = ["*"]
+
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,7 +32,21 @@ app.include_router(user.router)
 app.include_router(auth.router)
 app.include_router(vote.router)
 
+cat = ("""
+                      /^--^\     /^--^\     /^--^\
+                      \____/     \____/     \____/
+                     /      \   /      \   /      \
+                    |        | |        | |        |
+                     \__  __/   \__  __/   \__  __/
+|^|^|^|^|^|^|^|^|^|^|^|^\ \^|^|^|^/ /^|^|^|^|^\ \^|^|^|^|^|^|^|^|^|^|^|^|
+| | | | | | | | | | | | |\ \| | |/ /| | | | | | \ \ | | | | | | | | | | |
+########################/ /######\ \###########/ /#######################
+| | | | | | | | | | | | \/| | | | \/| | | | | |\/ | | | | | | | | | | | |
+|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|_|
+""")
+
 
 @app.get("/")
 def root():
-    return {"data": "J is a Massive C*nt!"}
+    return {cat}
+
