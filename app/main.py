@@ -9,7 +9,7 @@ from .database import engine
 from .routers import auth, post, user, vote
 
 # Not needed after alembic as alembic is maintaining the tables from models
-# models.Base.metadata.create_all(bind=engine)
+models.Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI()
@@ -36,5 +36,5 @@ app.include_router(vote.router)
 
 @app.get("/")
 def root():
-    return {"data": "Welcome to the MATRIX!"}
+    return {"data": "This is awesome"}
 
